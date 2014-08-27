@@ -1,0 +1,1 @@
+romchu 0.6 decompresses romc and htmlc.arc (in Wii Virtual Console N64 titles) type 2, which also uses LZ77 and Huffman coding.

@@ -1,0 +1,1 @@
+adXtract (0.2) extracts ADX files from any archive (uncompressed, that is) containing them. Note that it will also attempt to extract the audio stream from Sofdec video (SFD), but it doesn't work (it should produce a warning message). bero has a tool that does that well, sfd2mpg.

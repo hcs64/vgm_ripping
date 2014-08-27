@@ -1,0 +1,1 @@
+guessfsb 0.3 guesses possible decryption keys for FSB files. It is fairly easy to find these keys by inspection, so this isn't really needed, but I felt compelled to make an attempt. Includes a utility to decrypt.

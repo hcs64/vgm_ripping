@@ -1,0 +1,48 @@
+lzh8_cmpdec history
+
+2009-10-26 - lzh8_dec00 (0.0)
+             Initial reverse engineering of decompressor from
+             "Uncharted Waters: New Horizons" wad
+
+2009-10-27 - lzh8_ed-proto0
+             dec: Some cleanup of table reading, debug output for
+                  frequencies, symbols, and tree
+             enc: Initial (incomplete) compression implementation,
+                  LZSS and Huffman tree building only.
+
+2009-10-28 - lzh8_cmpdec01 (0.1)
+             dec: More cleanup of table reading, more debug output for tree
+             cmp: First working compression implementation, sequential LZSS
+                  search and breadth-first traversal for Huffman tree table
+                  building.
+
+2009-10-29 - lzh8_cmpdec02 (0.2)
+             dec: Debug output for table
+             cmp: - Hashing for fast LZSS search
+                  - 32-bit aligned output (removed earlier padding impl)
+                  - Debug output for tree
+
+           - lzh8_cmpdec03 (0.3)
+             cmp: Provide nonstrict compression build
+
+           - lzh8_cmpdec04 (0.4)
+             dec: Fix table overread
+
+2009-11-01 - lzh8_cmpdec05 (0.5)
+             cmp: - Correct table building algorithm
+                  - Comment, name, code cleanup
+
+           - lzh8_cmpdec06 (0.6)
+             Makefile support for nonstrict compressor
+             cmp: Fix memory leak
+
+2009-11-02 - lzh8_cmpdec07 (0.7)
+             History, general comment and code cleanup
+             cmp: - Support for building Huffman codes for 1 symbol
+                  - Safely handle 0 symbols (no backreferences, empty file)
+                  - Safely handle empty files
+                  - Fix potential overrun of table control buffer.
+
+2009-11-02 - lzh8_cmpdec08 (0.8)
+             dec: Stop when decode table is full
+

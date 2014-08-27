@@ -1,0 +1,2 @@
+vid1_2ogg 0.2 converts .ogg files beginning with VID1, from the Neversoft/Activision games Gun and Tony Hawk's American Wasteland (Gamecube versions, at least) to normal Ogg Vorbis.
+This is known to compute the granulepos incorrectly, so if you are using a player (such as foobar2000) which relies on the granulepos, you may wish to use revorb ( http://www.hydrogenaudio.org/forums/lofiversion/index.php/t64328.html ) to fix the output from vid1_2ogg.

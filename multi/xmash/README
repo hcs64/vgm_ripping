@@ -1,0 +1,1 @@
+xmash 0.8 is an all-in-one tool for XMA extraction and XMA2 to XMA rebuilding. It works on encrypted FSBs, RIFF, and (some) Wwise .bnk. The resulting files should be compatible with ToWav.

@@ -1,0 +1,19 @@
+adXtract 0.2 (25-Nov-2007)
+--------------------------
+
+extract ADX files from any archive, by recognizing signatures
+usage: c:\docume~1\jason\desktop\adXtract2\adXtract2.exe archive.zzz [ ... archive.zzz ]
+
+Windows (Cygwin/MinGW):
+  Just run make.
+
+Windows (VS6):
+  VS6 workspace and project files included; open and compile in VS. Note that MSVC is
+  #defined in the project options, and isn't something VS does by default.
+
+Linux:
+  Just run make (this will produce a file called adXtract2.exe but it is a native exe).
+
+OSX:
+  Probably just run make, I didn't try it.
+

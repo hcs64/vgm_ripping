@@ -1,0 +1,6 @@
+utf_tab 0.7 b3 is a set of tools for dealing with CRI's @UTF-table-based formats. utf_view shows the overall structure of such files, csb_extract extracts the contents of .csb files (often .aax audio), and cpk_unpack unpacks .cpk files (which also often contain .aax or .adx). usm_deinterleave deinterleaves .usm video files (with MPEG video and ADX audio, like the old Sofdec .sfd).
+
+cpk_unpack is largely superseded by the CRI CPK script for QuickBMS. http://aluigi.altervista.org/quickbms.htm
+
+
+usm_deinterleave is largely superseded by the USM functionality of VGMToolbox. http://sourceforge.net/projects/vgmtoolbox/

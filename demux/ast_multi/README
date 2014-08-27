@@ -1,0 +1,1 @@
+Similar to aix2adx, ast_multi 0.0 splits out multiple stereo streams from an AST (typically wth a filename ending in _multi.ast, found in Super Mario Galaxy).

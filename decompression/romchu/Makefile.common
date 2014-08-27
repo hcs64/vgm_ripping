@@ -1,0 +1,7 @@
+PROJECT_NAME=romchu
+EXE_NAME=$(PROJECT_NAME)$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+clean:
+	rm -f $(EXE_NAME)

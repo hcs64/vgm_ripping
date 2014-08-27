@@ -1,0 +1,14 @@
+SSM Extractor v0.1
+by hcs
+
+This is a command line tool for exporting the sounds within an SSM archive into individual DSP files.
+
+Caveat:
+I currently do not have a single working algorithm for calculating the offset of the ADPCM data, rather
+I have two, which together agree on much of the data, and where they disagree usually one is right (as
+can be tested with consistency checks against the header). I generate a "confidence" value for every
+track extracted, if it is too low (which only happens when neither method seems to point to the proper
+data) it will not extract the data. Hopefully I'll be able to find something that works soon, but this
+works acceptably on nearly everything (in Smash Bros. Melee) at the moment.
+
+9/19/05

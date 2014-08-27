@@ -1,0 +1,3 @@
+Note: this tool does not work very well
+
+ripping_mama 0.1 extracts .rwav sounds from .brsar files. It is effective with "Version 1.4" .brsars, such as those in the 2nd Cooking Mama (despite the name, the 1st Cooking Mama's .brsar doesn't work with ripping_mama, but it works with brsar_unpack). The .rwav files are playable in vgmstream since r563.

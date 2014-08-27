@@ -1,0 +1,4 @@
+Note: this tool does not work very well
+
+brsar_unpack finds sounds in .brsar files and decodes them. This works moderately well with files it reports as "Version 1.3", those around the vintage of Super Smash Bros Brawl. For "Version 1.4" .brsars, you'll have better luck with ripping_mama.
+Stereo sounds are skipped, and looping is ignored. Nothing is done with sequences.

@@ -1,0 +1,19 @@
+PROJECT_NAME=vid1_2ogg
+EXE_NAME=$(PROJECT_NAME)$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+OBJECTS=vid1_2ogg.o VID1.o crc.o
+
+$(EXE_NAME): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(STRIP) $@
+
+vid1_2ogg.o: vid1_2ogg.cpp VID1.h Bit_stream.h crc.h errors.h
+
+VID1.o: VID1.cpp VID1.h Bit_stream.h crc.h errors.h
+
+crc.o: crc.c crc.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

@@ -1,0 +1,1 @@
+xma_parse 0.11 is a parser for XMA and XMA2 streams. It can export these (for use with tools that only handle one stream) and rebuild XMA2 and XMA streams as clean XMA (for picky decoders).

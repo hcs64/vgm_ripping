@@ -1,0 +1,6 @@
+2009-01-20 - 0.1 - first release
+2009-04-15 - 0.2 - proper handling of mono "second chunk extra" brstms, warning
+                   and instructions for poorly chosen loop values
+2009-05-06 - 0.3 - support for extracting up to 8 channels (but not building)
+2009-07-23 - 0.4 - fix stupid typo in usage message, trying exe + zip trick to
+                   encourage source distribution

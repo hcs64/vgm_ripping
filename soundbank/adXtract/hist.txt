@@ -1,0 +1,6 @@
+0.0 - ?
+0.1 - (25-apr-2007), by ak
+    - massive speed improvements
+0.2 - (25-nov-2007), by hcs:
+    - fix reading of terminal frame, and use that as an additional check
+    - support for encrypted ADXs

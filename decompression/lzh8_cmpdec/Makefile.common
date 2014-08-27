@@ -1,0 +1,30 @@
+PROJECT_NAME=lzh8_cmp
+EXE_NAME=$(PROJECT_NAME)$(EXE_EXT)
+
+PROJECT_NAME2=lzh8_dec
+EXE_NAME2=$(PROJECT_NAME2)$(EXE_EXT)
+
+PROJECT_NAME_NONSTRICT=lzh8_cmp_nonstrict
+EXE_NAME_NONSTRICT=$(PROJECT_NAME_NONSTRICT)$(EXE_EXT)
+
+OBJECTS=$(PROJECT_NAME).o $(PROJECT_NAME2).o $(PROJECT_NAME_NONSTRICT).o util.o
+
+all: $(EXE_NAME) $(EXE_NAME2) $(EXE_NAME_NONSTRICT)
+
+$(EXE_NAME): $(PROJECT_NAME).o util.o
+
+$(EXE_NAME2): $(PROJECT_NAME2).o util.o
+
+$(EXE_NAME_NONSTRICT): $(PROJECT_NAME_NONSTRICT).o util.o
+
+$(PROJECT_NAME).o: $(PROJECT_NAME).c error_stuff.h util.h
+
+$(PROJECT_NAME2).o: $(PROJECT_NAME2).c error_stuff.h util.h
+
+$(PROJECT_NAME_NONSTRICT).o: $(PROJECT_NAME).c error_stuff.h util.h
+	$(CC) $(CPPFLAGS)$(CFLAGS) -c -DLZH8_NONSTRICT $< -o $@
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(EXE_NAME2) $(EXE_NAME_NONSTRICT) $(OBJECTS)

@@ -1,0 +1,1 @@
+PoP360XMA 0.1 unpacks XMA streams from files like Common_BAO_0x00440f00 in Prince of Persia 2008 for Xbox 360. It doesn't actually do anything XMA-specific, it just deinterleaves the streams it finds. It also doesn't work on noninterleaved files. Also works for Avatar (360).

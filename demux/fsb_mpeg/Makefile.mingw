@@ -1,0 +1,6 @@
+fsb_mpeg.exe: fsb_mpeg.c
+	i586-mingw32msvc-gcc --std=c99 fsb_mpeg.c -o fsb_mpeg.exe -lm
+	i586-mingw32msvc-strip fsb_mpeg.exe
+
+clean:
+	rm -f fsb_mpeg.exe

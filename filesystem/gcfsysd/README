@@ -1,0 +1,2 @@
+gcfsysd 0.1 extracts files from the .fsys files found in Pokemon XD Gale of Darkness. Rename .000 files to .dsp or .ish to (possibly) get them to work with in_cube 0.16 (or higher, 0.15 had looping problems). 
+0.1 now works with Pokemon Colosseum, but I don't know how to play the extracted files.

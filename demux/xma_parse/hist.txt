@@ -1,0 +1,4 @@
+0.9 - add missing clear overflow bit count on pure overflow packet in XMA2->XMA rebuild (for such a frame in the midst of a block in Singularity)
+0.10 - option to ignore packet skip, as in some bizarre FSB stuff
+0.11 - option to set XMA2 block size equal to data size to effectively disable blocking
+TODO: rest of history

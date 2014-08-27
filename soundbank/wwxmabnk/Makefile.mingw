@@ -1,0 +1,10 @@
+LDFLAGS=
+STRIP=i586-mingw32msvc-strip
+CC=i586-mingw32msvc-gcc
+EXE_EXT=.exe
+
+%.exe:
+	$(CC) $(LDFLAGS) $(CFLAGS) $^ -o $@
+	$(STRIP) $@
+
+include Makefile.common

@@ -1,0 +1,1 @@
+adxloop 0.1 will force an ADX to loop from end to beginning. Optionally you can add an "intro" which is played first and not looped. Now with proper loop start points for in_cube.

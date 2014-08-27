@@ -1,0 +1,1 @@
+fsbii 0.7 converts a multi-stream .fsb into a set of single-stream .fsbs, suitable for use with vgmstream. This is sometimes necessary for Wii games, thus the name. As of 0.5 it can also extract embedded FSBs from within (uncompressed) archives. 0.6 supports FSB4 and pads out the header.

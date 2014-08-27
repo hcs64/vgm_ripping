@@ -1,0 +1,1 @@
+srt_inject_dsp 0.1 will replace streams within a .srt/.ssd set. It can use as input either another .srt or a pair of standard .dsp files. Has been used to replace songs in Tatsunoko vs. Capcom.

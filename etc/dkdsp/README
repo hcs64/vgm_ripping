@@ -1,0 +1,3 @@
+I've put together, on request, a program to convert the standard mono DSP files created by the devkit DSPADPCM.exe into stereo (either by doubling a mono file or using one mono file for each channel) files for Donkey Konga or Star Fox Assault. It's been tested on a Gamecube with Japanese Donkey Konga 2.
+
+Notice that the point of this program is to generate new DSP files for use in Donkey Konga. It is not necessary to combine right and left channel DSPs for playback with in_dsp or in_cube, if you choose either it will load the other as well.

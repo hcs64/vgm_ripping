@@ -1,0 +1,1 @@
+whdread 0.2 extracts the individual WAVs (PCM and DSP) from streams.wav in Hitman 2, using the WHD files which contain the header information.

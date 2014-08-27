@@ -1,0 +1,16 @@
+CFLAGS=-std=c99 -pedantic -Wall
+LDFLAGS=-lm
+OBJECTS=wwisexmabank.o util.o
+COMMON_HEADERS=error_stuff.h util.h
+EXE_NAME=wwisexmabank$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): $(OBJECTS)
+
+wwisexmabank.o: wwisexmabank.c $(COMMON_HEADERS)
+
+util.o: util.c $(COMMON_HEADERS)
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

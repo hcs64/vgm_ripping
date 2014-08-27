@@ -1,0 +1,70 @@
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+# Wario Land: The Shake Dimension GFA
+
+Endian little
+
+# Main header
+IDString "GFAC"
+Get HEADER_1_1 long
+Get HEADER_1_2 long
+If HEADER_1_1 != 1
+   Print "Strange HEADER_1_1 = %HEADER_1_1%, may crash..."
+EndIf
+If HEADER_1_2 != 1
+   Print "Strange HEADER_1_2 = %HEADER_1_2%, may crash..."
+EndIf
+Get FILE_TABLE_OFFSET long
+Get FILE_TABLE_SIZE long
+Get DATA_OFFSET long
+Get DATA_SIZE long
+
+# Read compressed data header
+GoTo DATA_OFFSET
+
+IDString "GFCP"
+Get HEADER_1_1 long
+Get CTYPE long
+If HEADER_1_1 != 1
+   Print "Strange GFCP HEADER_1_1 = %HEADER_1_1%, may crash..."
+EndIf
+If CTYPE == 1
+   ComType bpe
+ElseIf CTYPE == 2
+   ComType lz77wii_raw30
+Else
+  Print "Unknown compression %CTYPE%"
+  Exit
+EndIf
+
+Get RAW_DATA_SIZE long
+Get COMPRESSED_DATA_SIZE long
+
+Set CDATA_OFFSET DATA_OFFSET
+Math CDATA_OFFSET + 0x14
+
+# Decompress
+Clog MEMORY_FILE CDATA_OFFSET COMPRESSED_DATA_SIZE RAW_DATA_SIZE
+
+# Extract files
+GoTo FILE_TABLE_OFFSET
+Get FILE_COUNT long
+SavePos READ_OFFSET
+
+For I = 0 < FILE_COUNT
+   GoTo READ_OFFSET
+
+   # Read the file entry
+   Get CRC32 long # guess
+   Get NAME_OFFSET long
+   Get FILE_SIZE long
+   Get FILE_OFFSET long
+
+   SavePos READ_OFFSET
+
+   Math FILE_OFFSET - DATA_OFFSET
+
+   GoTo NAME_OFFSET
+   Get FILE_NAME string
+
+   Log FILE_NAME FILE_OFFSET FILE_SIZE MEMORY_FILE
+Next I

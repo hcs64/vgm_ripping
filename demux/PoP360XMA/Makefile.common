@@ -1,0 +1,15 @@
+PROJECT_NAME=PoP360XMA
+EXE_NAME=$(PROJECT_NAME)$(EXE_EXT)
+
+OBJECTS=$(PROJECT_NAME).o util.o
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): $(PROJECT_NAME).o util.o
+
+$(PROJECT_NAME).o: $(PROJECT_NAME).c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

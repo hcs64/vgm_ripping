@@ -1,0 +1,6 @@
+wwdumpsnd 0.4 extracts the sound effects and instrument samples from The Legend of Zelda: The Wind Waker. They are dumped as plain WAVs. To use, all the .aw files from /Audiores/Banks and JaiInit.aaf from /Audiores must be in the current directory when wwdumpsnd is run. 100 MB of WAVs are created.
+
+0.3 fixes some issues with the format of the WAV.
+0.4 adds Super Mario Sunshine support thanks to ichifish and Dolphin.
+
+Note that there are some samples that sound quite off, such as in mboss_0.aw. I suspect that these are stereo (the vast majority are mono and that is all I handle) but I haven't worked it out yet.

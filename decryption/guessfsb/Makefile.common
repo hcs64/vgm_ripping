@@ -1,0 +1,18 @@
+OBJECTS=guessfsb.o decfsb.o util.o
+EXE_NAME=guessfsb$(EXE_EXT)
+EXE_NAME2=decfsb$(EXE_EXT)
+
+all: $(EXE_NAME) $(EXE_NAME2)
+
+$(EXE_NAME): guessfsb.o util.o
+
+$(EXE_NAME2): decfsb.o util.o
+
+guessfsb.o: guessfsb.c error_stuff.h util.h
+
+decfsb.o: decfsb.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(EXE_NAME2) $(OBJECTS)

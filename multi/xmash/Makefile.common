@@ -1,0 +1,28 @@
+CFLAGS=-std=c99 -pedantic -Wall -ggdb
+LDFLAGS=-lm -ggdb
+OBJECTS=xmash.o util.o bitstream.o guessfsb.o fsbext.o riffext.o bnkext.o xma_rebuild.o
+COMMON_HEADERS=error_stuff.h util.h
+EXE_NAME=xmash$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): $(OBJECTS)
+
+xmash.o: xmash.c bitstream.h guessfsb.h fsbext.h riffext.h bnkext.h xma_rebuild.h $(COMMON_HEADERS)
+
+util.o: util.c $(COMMON_HEADERS)
+
+bitstream.o: bitstream.c bitstream.h $(COMMON_HEADERS)
+
+guessfsb.o: guessfsb.c guessfsb.h $(COMMON_HEADERS)
+
+fsbext.o: fsbext.c fsbext.h xma_rebuild.h $(COMMON_HEADERS)
+
+riffext.o: riffext.c riffext.h fsbext.h xma_rebuild.h $(COMMON_HEADERS)
+
+bnkext.o: bnkext.c bnkext.h fsbext.h xma_rebuild.h $(COMMON_HEADERS)
+
+xma_rebuild.o: xma_rebuild.c xma_rebuild.h bitstream.h $(COMMON_HEADERS)
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

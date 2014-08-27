@@ -1,0 +1,34 @@
+CFLAGS=-std=c99 -pedantic -Wall -O2
+STRIP=i586-mingw32msvc-strip
+CC=i586-mingw32msvc-gcc
+
+all: cpk_unpack.exe utf_view.exe csb_extract.exe usm_deinterleave.exe
+
+%.exe:
+	$(CC) $(CFLAGS) $^ -o $@
+	$(STRIP) $@
+
+csb_extract.exe: csb_extract.o utf_tab.o util.o
+
+csb_extract.o: csb_extract.c utf_tab.h error_stuff.h util.h
+
+cpk_unpack.exe: cpk_unpack.o cpk_uncompress.o utf_tab.o util.o
+
+cpk_unpack.o: cpk_unpack.c utf_tab.h error_stuff.h util.h
+
+cpk_uncompress.o: cpk_uncompress.c error_stuff.h util.h
+
+usm_deinterleave.exe: usm_deinterleave.o utf_tab.o util.o
+
+usm_deinterleave.o: usm_deinterleave.c utf_tab.h error_stuff.h util.h
+
+utf_view.exe: utf_view.o utf_tab.o util.o
+
+utf_view.o: utf_view.c utf_tab.h error_stuff.h util.h
+
+utf_tab.o: utf_tab.c utf_tab.h error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f csb_extract.exe cpk_unpack.exe usm_deinterleave.exe utf_view.exe csb_extract.o cpk_unpack.o cpk_uncompress.o usm_deinterleave.o utf_view.o utf_tab.o util.o

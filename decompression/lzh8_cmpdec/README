@@ -1,0 +1,1 @@
+lzh8_cmpdec 0.8 compresses and decompresses LZH8, used in Wii Virtual Console games. lzh8_cmp reproduces the original compression, while lzh8_cmp_nonstrict achieves slightly better compression than the original, retaining compatibility with the VC's decompressor.

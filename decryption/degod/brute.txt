@@ -1,0 +1,22 @@
+I glance at Senko1.adx and Senko2.adx in khexedit. Senko1.adx seems to be quieter at the beginning, so it's starting encrypted scale (0x46d6) is likely to be near the actual starting value, and the next encrypted scale (0x2ca1, the first scale of the second channel which is also quiet) is also likely to be near the starting value. Note that the starting values for Senko2.adx (0x46df, 0x2ca3) are near these.
+So I start with "degod -b -n 4 Senko1.adx". (By default it will try to use every frame in the file, which will take a really long time, so we use -n 4 to only use the first 4 frames.)
+Fairly quickly it hits on a few possibilities:
+-s 46d6 -m 5ced -a 3089
+-s 46d7 -m 5ced -a 539d
+-s 46d5 -m 5ced -a 0d75
+all with an average scale of 8. So this looks fairly good, but it could be better.
+I'll decode using the first key (starting with 46d6) and see how it works out. Sounds alright but for a clicking... this is fairly common in a close key.
+So I try the next key (starting with 46d7)... worse
+So I try the next key (starting with 46d5)...still bad.
+
+Ok, so we run it again a higher -n and give it some time, as the clicking is periodic the error might not be apparent in the first few frames. I'll use "degod -b -n 100 Senko1.adx".
+'bout 20 minutes went by and nothing better than the 46d6 one found before.
+So I give it another shot with -n 1000 and leave it overnight.
+Nothing better than 46d6 showed up.
+
+So, time for another strategy. There may well be nothing better than the -s 46d6 -m 5ced -a 3089 key for the first few frames, and as I extend it to more frames it just computes more slowly and might take a long time to get to a better global result. The major perceptible error (with the 46d6 key) is clicking, so I dump the decoded audio to a WAV and look at it in Audacity. The first big clicks are at 0.055 and 0.060. I'm going to brute force only on that small range (0.050 to 0.070, *44100/18/2 = frames 60 to 85) with "degod -b -f 60 -n 25 Senko1.adx"
+So I let this go for a little while, I don't get anything better than -s 6cd3 -m 5ced -a 64cd, with 232 scale avg. This is no good, though (To use this key for the whole file I use "xortest 6cd3 5ced 64cd", which gives me the random number stream. I go to the end (the last value, which is the same as the first value) and up 60 values to find the starting value, in this case 765f. That couldn't possibly be the actual start value. Note that I have some assumptions about the random stream, namely that it will always cycle back to the start value, which I don't think is strictly true, though it has been true for all keys found so far.), for the whole file. The multiplier is 5ced, though, which seems familiar. So maybe the other elements of the key are off and that is correct. I try it for that section of the file again, forcing a muliplier of 5ced (degod -b -m 5ced -f 60 -n 25 Senko1.adx), but again its best values are unusable (the best is -s 6cf3 -m 5ced -a 474d, which would have a start value of 767f). I try it again, for the first 100 frames (degod -b -m 5ced -n 100 Senko1.adx) and it quickly comes to -s 46d3 -m 5ced -a 474d, which works!
+
+A few notes:
+1) It would have been best to take the -m 5ced hint that I got in the first few minutes, from those 3 identically-scoring keys. Had I extended it to a few more frames with that I would have had the key I ended up with the next day.
+2) -m 5ced -a 474d were also elements of the result for -f 60 -n 25, the start value was just way off.

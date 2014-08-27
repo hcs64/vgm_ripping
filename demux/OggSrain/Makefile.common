@@ -1,0 +1,17 @@
+PROJECT_NAME=OggSrain
+EXE_NAME=$(PROJECT_NAME)$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+OBJECTS=OggSrain.o crc.o
+
+$(EXE_NAME): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(STRIP) $@
+
+OggSrain.o: OggSrain.cpp Bit_stream.h
+
+crc.o: crc.c crc.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

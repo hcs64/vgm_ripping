@@ -1,0 +1,1 @@
+demux_dat 0.2 extracts audio from the .DAT files in Metal Gear Solid 3. #define BIG_ENDIAN should work on Metal Gear Solid 4, but it is not tested.

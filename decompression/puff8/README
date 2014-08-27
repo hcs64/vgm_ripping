@@ -1,0 +1,1 @@
+puff8 0.0 decodes Huf8 (8 bit Huffman coding, as seen on the GBA). This was used to pack ADX files (along with other stuff) in Space Invaders Get Even for Wii Ware.
