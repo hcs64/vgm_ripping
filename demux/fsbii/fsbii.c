@@ -7,7 +7,7 @@
 #include <errno.h>
 #include <math.h>
 
-/* fsbii 0.7 - convert multi-stream fsb into single-stream fsbs, or extract embedded fsbs */
+/* fsbii 0.8 - convert multi-stream fsb into single-stream fsbs, or extract embedded fsbs */
 
 #define CHECK(x,msg) \
     do { \
@@ -333,6 +333,9 @@ int try_multistream_fsb(FILE *infile)
 
             table_offset += entry_size;
             body_offset += entry_file_size;
+            if (entry_file_size & 0x1F) {
+                body_offset += 0x20 - (entry_file_size & 0x1F);
+            }
         }
 
         free(name_buf);
@@ -416,7 +419,7 @@ int main(int argc, char *argv[])
     int rc;
     if (argc != 2)
     {
-        printf("fsbii 0.7 - convert multi-stream fsb into single-stream fsbs, or extract embedded fsbs\n"
+        printf("fsbii 0.8 - convert multi-stream fsb into single-stream fsbs, or extract embedded fsbs\n"
                 "usage: fsbii blah.fsb\n");
         exit(EXIT_FAILURE);
     }
