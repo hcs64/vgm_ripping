@@ -1,0 +1,13 @@
+OBJECTS=fsb_ima_reinterleave.o util.o
+EXE_NAME=fsb_ima_reinterleave$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): fsb_ima_reinterleave.o util.o
+
+fsb_ima_reinterleave.o: fsb_ima_reinterleave.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)
