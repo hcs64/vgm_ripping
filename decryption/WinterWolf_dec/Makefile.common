@@ -1,0 +1,13 @@
+OBJECTS=dump_xor.o util.o
+EXE_NAME=dump_xor$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): dump_xor.o util.o
+
+dump_xor.o: dump_xor.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)
