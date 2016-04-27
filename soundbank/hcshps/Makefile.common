@@ -1,0 +1,13 @@
+OBJECTS=hcshps.o util.o
+EXE_NAME=hcshps$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): hcshps.o util.o
+
+hcshps.o: hcshps.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)
