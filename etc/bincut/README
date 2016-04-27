@@ -1,0 +1,5 @@
+bincut
+
+Extract sections of a raw binary file.
+
+usage: bincut infile outfile range [repeat stride]
