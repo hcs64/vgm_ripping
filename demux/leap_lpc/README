@@ -1,0 +1,6 @@
+A failed attempt at understanding the format used for recorded names in
+LeapFrog MyPals Scout.
+
+leap_lpc_rev.py encodes and leap_lpc.py decodes.
+
+See http://forum.xentax.com/viewtopic.php?f=17&t=5632
