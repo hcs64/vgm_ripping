@@ -1,0 +1,17 @@
+PROJECT_NAME=unpack
+EXE_NAME=$(PROJECT_NAME)$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+OBJECTS=unpack.o util.o
+
+$(EXE_NAME): $(OBJECTS)
+	$(LD) $(LDFLAGS) $^ -o $@
+	$(STRIP) $@
+
+unpack.o: unpack.c
+
+util.o: util.c
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

@@ -1,0 +1,8 @@
+CFLAGS=-std=c99 -pedantic -Wall -O
+LD=i586-mingw32msvc-gcc
+LDFLAGS=
+STRIP=i586-mingw32msvc-strip
+CC=i586-mingw32msvc-gcc
+EXE_EXT=.exe
+
+include Makefile.common
