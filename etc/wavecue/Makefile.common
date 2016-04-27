@@ -1,0 +1,24 @@
+#CFLAGS=-std=c99 -pedantic -Wall -Werror -ggdb -DDEBUG
+#LDFLAGS=-ggdb
+CFLAGS=-std=c99 -pedantic -Wall -Werror 
+LDFLAGS=
+OBJECTS=wavecue.o parseriff.o util.o
+COMMON_HEADERS=error_stuff.h util.h Makefile.common
+EXE_NAME=wavecue$(EXE_EXT)
+CC=$(TOOL_PREFIX)gcc
+STRIP=$(TOOL_PREFIX)strip
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): $(OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	$(STRIP) $@
+
+wavecue.o: wavecue.c parseriff.h $(COMMON_HEADERS)
+
+parseriff.o: parseriff.c parseriff.h $(COMMON_HEADERS)
+
+util.o: util.c $(COMMON_HEADERS)
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

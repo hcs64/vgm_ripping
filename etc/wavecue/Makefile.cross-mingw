@@ -1,0 +1,5 @@
+LDFLAGS=
+TOOL_PREFIX=i586-mingw32msvc-
+EXE_EXT=.exe
+
+include Makefile.common
