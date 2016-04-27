@@ -1,0 +1,13 @@
+OBJECTS=ipa_reverse_nibbles.o util.o
+EXE_NAME=ipa_reverse_nibbles$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): ipa_reverse_nibbles.o util.o
+
+ipa_reverse_nibbles.o: ipa_reverse_nibbles.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)
