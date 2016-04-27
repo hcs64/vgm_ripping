@@ -1,0 +1,13 @@
+OBJECTS=ttarch.o util.o
+EXE_NAME=ttarch$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): ttarch.o util.o
+
+ttarch.o: ttarch.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)
