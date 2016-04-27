@@ -1,4 +1,7 @@
 dump_xor 0.1
 
-Decrypt files from Icarus Studios' WinterWolf engine. Don't remember what game
-this was from.
+Decrypt some files. Don't remember what game this was from, but at a guess I
+think it may have been Fallen Earth. The decryption key is
+"Icarus_Studios_WinterWolf_Engine=CB,JH,MN,JB,JD,AL,RO"
+and I think those may be initials; Chris Babcock was Lead 3D Engine Programmer
+on Fallen Earth, though I can't match up all the others to members of the team.
