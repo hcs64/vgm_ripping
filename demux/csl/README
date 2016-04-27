@@ -1,0 +1,7 @@
+CSL 0.0
+extract and decode DSP from CSL files from Baten Kaitos 
+
+This is likely a whole sequence format, but here it looks like we have
+files which each contain a minimal sequence and a single program with a
+single sample. Lots of checks to hopefully catch it when something else
+pops up.
