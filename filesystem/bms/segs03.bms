@@ -1,0 +1,130 @@
+# BlazBlue, Arcana Heart 3 bddata_*.segs with FPAC (script 0.3)
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian big
+comtype deflate
+
+idstring "segs"
+
+goto 0x06
+get segment_count short
+set next_to_last segment_count
+math next_to_last - 1
+
+goto 0x08
+get unc_file_size long
+set unc_file_size_left = unc_file_size
+get file_size long
+
+log MEMORY_FILE 0 0
+append
+
+set idxpos = 0x10
+for i = 0 < segment_count
+    goto idxpos
+    get comp_size short
+    get dummy short # what is this on last segment?
+    get offset long
+
+    if unc_file_size_left > 0x10000
+        set segment_size = 0x10000
+    else
+        set segment_size = 0x10000
+    endif
+
+    if comp_size == 0
+        # uncompressed
+
+        goto offset
+        log MEMORY_FILE offset segment_size
+    else
+        # compressed
+
+        math offset - 1
+
+        goto offset
+
+        clog MEMORY_FILE offset comp_size segment_size
+        #clog "out" offset comp_size segment_size
+        #clog "" offset size 41226560
+    endif
+
+    math unc_file_size_left - segment_size
+    math idxpos + 0x8
+next i
+
+goto 0x0 MEMORY_FILE
+GetDString signature 4 MEMORY_FILE
+goto 0x0 MEMORY_FILE
+if signature == "FPAC"
+    CallFunction FPAC_unpack
+elif signature == "GGGG"
+    get outfilename FILENAME
+    string outfilename + "_inner.segs"
+    log outfilename 0x10 unc_file_size MEMORY_FILE
+else
+    get outfilename FILENAME
+    string outfilename + ".ext"
+    log outfilename 0 unc_file_size MEMORY_FILE
+endif
+
+exit
+
+# FPAC stuff
+ 
+StartFunction FPAC_unpack
+
+endian big
+
+savepos startloc MEMORY_FILE
+
+idstring "FPAC" MEMORY_FILE
+get start_offset long MEMORY_FILE  # 0x4
+get dummy long MEMORY_FILE         # 0x8
+get file_count long MEMORY_FILE    # 0xC
+get dummy long MEMORY_FILE         # 0x10
+get name_length long MEMORY_FILE   # 0x14
+
+set idxpos = 0x20
+math idxpos + startloc
+math start_offset + startloc
+
+for i = 0 < file_count
+    goto idxpos MEMORY_FILE
+    get name string MEMORY_FILE
+    math idxpos + name_length
+    math idxpos + 0x4
+    goto idxpos MEMORY_FILE
+    get offset long MEMORY_FILE
+    get size long MEMORY_FILE
+    math offset + start_offset
+
+    goto offset MEMORY_FILE
+    GetDString signature 4 MEMORY_FILE
+    if signature == "FPAC"
+        goto offset MEMORY_FILE
+        CallFunction FPAC_unpack
+    elif signature == "GGGG"
+        set segs_offset = 0x10
+        math segs_offset + offset
+        get outfilename FILENAME
+        string outfilename + "_"
+        string outfilename + name
+        string outfilename + ".segs"
+        log outfilename segs_offset size MEMORY_FILE
+    else
+        get outfilename FILENAME
+        string outfilename + "_"
+        string outfilename + name
+        log outfilename offset size MEMORY_FILE
+    endif
+
+    math idxpos + 0x8
+
+    # pad
+    math idxpos + 0xF
+    math idxpos / 0x10
+    math idxpos * 0x10
+next i
+
+EndFunction

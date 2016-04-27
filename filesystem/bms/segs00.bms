@@ -1,0 +1,53 @@
+# BlazBlue, Arcana Heart 3 bddata_*.segs (script 0.0)
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian big
+comtype deflate
+
+idstring "segs"
+
+goto 0x06
+get file_count short
+set next_to_last file_count
+math next_to_last - 1
+
+goto 0x08
+get unc_file_size long
+get file_size long
+
+append
+
+set idxpos = 0x10
+for i = 0 < file_count
+    goto idxpos
+    endian little
+    get unc_size long
+    endian big
+    get offset long
+    endian little
+    get junk long
+    endian big
+    get size long # offset of next file
+
+    math offset - 1
+    math size - 1
+
+    if i == next_to_last
+        set size = file_size
+    endif
+
+    math size - offset
+
+    goto offset
+
+    if unc_file_size >= 0x10000
+        set segment_size = 0x10000
+    else
+        set segment_size = unc_file_size
+    endif
+    clog "out" offset size segment_size
+    #clog "" offset size 41226560
+
+    math unc_file_size - segment_size
+    math idxpos + 0x8
+next i

@@ -1,0 +1,38 @@
+# BlazBlue, Arcana Heart 3 FPAC (script 0.1)
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian big
+
+goto 0x0
+idstring "FPAC"
+goto 0x4
+get start_offset long
+goto 0xC
+get file_count long
+goto 0x14
+get name_length long
+
+set idxpos = 0x20
+
+for i = 0 < file_count
+    goto idxpos
+    get name string
+    math idxpos + name_length
+    math idxpos + 0x4
+    goto idxpos
+    get offset long
+    get size long
+    math offset + start_offset
+
+    get outfilename FILENAME
+    string outfilename + "_"
+    string outfilename + name
+    log outfilename offset size
+
+    math idxpos + 0x8
+
+    # pad
+    math idxpos + 0xF
+    math idxpos / 0x10
+    math idxpos * 0x10
+next i

@@ -1,0 +1,43 @@
+# Final Fantasy Crystal Chronicles .pos and .dat script 0.0
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian big
+
+idstring "POSD"
+get dir_count long
+
+open FDDE DAT 1
+
+savepos dir_idxpos
+set file_idxpos dir_count
+math file_idxpos * 8
+math file_idxpos + 16
+
+for dir_idx = 0 < dir_count
+    set dir_name "dir_"
+    string dir_name + dir_idx
+
+    goto dir_idxpos
+
+    get unknown long # file name stuff?
+    get file_count long
+    savepos dir_idxpos
+
+    for file_idx = 0 < file_count
+        set file_name dir_name
+        string file_name + "\file_"
+        string file_name + file_idx
+
+        goto file_idxpos
+
+        get file_offset long
+        math file_offset * 2048
+        get file_size long
+
+        savepos file_idxpos
+
+        log file_name file_offset file_size 1
+    next file_idx
+
+next dir_idx
+

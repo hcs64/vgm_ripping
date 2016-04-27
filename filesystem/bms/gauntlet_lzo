@@ -1,0 +1,10 @@
+IDString "LZOn"
+
+Endian Big
+Goto 0x08
+Get UncompFileSize long
+Goto 0x0C
+Get CompFileSize long
+
+ComType lzo1x
+Clog "gauntlet.out" 0x10 CompFileSize UncompFileSize

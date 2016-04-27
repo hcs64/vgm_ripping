@@ -1,0 +1,53 @@
+# Excitebots .toc and .res/.sng/etc script 0.0
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian little
+
+# use the non-.toc file
+idstring "0TSR" # RST0
+goto 0x10
+get RES_SIZE long
+get UID_RES long
+get RES_HEADER long
+
+# locate the toc file
+open FDDE TOC 1
+idstring 1 "0SER" # RES0
+idstring 1 "COTE" # ETOC
+goto 0x10 1
+idstring 1 "!IGM" # MGI!
+goto 0x1C 1
+get UID_TOC long 1
+get FILE_COUNT long 1
+goto 0x30 1
+get STRING_TABLE_SIZE long 1
+savepos TOC_IDXPOS 1
+
+if UID_TOC != UID_RES
+    Print "UID mismatch %UID_TOC% != %UID_RES%"
+    Exit
+endif
+
+# compute string table start
+set TOC_STRING_TABLE FILE_COUNT
+math TOC_STRING_TABLE * 0x28
+math TOC_STRING_TABLE + 0x34
+
+for DIR_IDX = 0 < FILE_COUNT
+   goto TOC_IDXPOS 1
+
+   get FILE_NAME_OFFSET long 1
+   get FILE_TYPE_STR long 1
+   get FILE_TYPE long 1
+   get FILE_SIZE long 1
+   get FILE_OFFSET long 1
+   math FILE_OFFSET + RES_HEADER
+   math FILE_NAME_OFFSET + TOC_STRING_TABLE
+
+   goto FILE_NAME_OFFSET 1
+   get FILE_NAME string 1
+
+   log FILE_NAME FILE_OFFSET FILE_SIZE
+
+   math TOC_IDXPOS + 0x28
+next DIR_IDX

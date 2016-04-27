@@ -1,0 +1,78 @@
+# Excitebots .toc and .res/.sng/etc script 0.1
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian little
+
+# use the non-.toc file
+idstring "0TSR" # RST0
+goto 0x10
+get RES_SIZE long
+get UID_RES long
+get RES_HEADER long
+
+# locate the toc file
+open FDDE TOC 1
+idstring 1 "0SER" # RES0
+idstring 1 "COTE" # ETOC
+goto 0x10 1
+idstring 1 "!IGM" # MGI!
+goto 0x1C 1
+get UID_TOC long 1
+get FILE_COUNT long 1
+#first section is compressed
+get UNCOMPRESSED_SIZE long 1
+get COMPRESSED_SIZE long 1
+goto 0x30 1
+get STRING_TABLE_SIZE long 1
+savepos TOC_IDXPOS 1
+
+if UID_TOC != UID_RES
+   Print "UID mismatch %UID_TOC% != %UID_RES%"
+   Exit
+endif
+
+if COMPRESSED_SIZE != UNCOMPRESSED_SIZE
+   Print "Ignoring compressed section %COMPRESSED_SIZE% bytes"
+   set COMPRESSED_SIZE_END COMPRESSED_SIZE
+   math COMPRESSED_SIZE_END + RES_HEADER
+   math COMPRESSED_SIZE_END + 0x7ff
+   math COMPRESSED_SIZE_END / 0x800
+   math COMPRESSED_SIZE_END * 0x800
+endif
+
+# compute string table start
+set TOC_STRING_TABLE FILE_COUNT
+math TOC_STRING_TABLE * 0x28
+math TOC_STRING_TABLE + 0x34
+
+for DIR_IDX = 0 < FILE_COUNT
+   goto TOC_IDXPOS 1
+
+   get FILE_NAME_OFFSET long 1
+   get FILE_TYPE_STR long 1
+   get FILE_TYPE long 1
+   get FILE_SIZE long 1
+   get FILE_OFFSET long 1
+   math FILE_NAME_OFFSET + TOC_STRING_TABLE
+
+   goto FILE_NAME_OFFSET 1
+   get FILE_NAME string 1
+
+   # adjust for compression
+   if COMPRESSED_SIZE != UNCOMPRESSED_SIZE
+      if FILE_OFFSET >= UNCOMPRESSED_SIZE
+         math FILE_OFFSET - UNCOMPRESSED_SIZE
+         math FILE_OFFSET + COMPRESSED_SIZE_END
+
+         log FILE_NAME FILE_OFFSET FILE_SIZE
+      else
+         Print "Skipping compressed file %FILE_NAME%"
+      endif
+   else
+      math FILE_OFFSET + RES_HEADER
+
+      log FILE_NAME FILE_OFFSET FILE_SIZE
+   endif
+
+   math TOC_IDXPOS + 0x28
+next DIR_IDX

@@ -1,0 +1,37 @@
+# SSFIV .eaf archives (script 0.2)
+# script for QuickBMS http://aluigi.org/papers.htm#quickbms
+
+endian big
+comtype deflate
+
+idstring "#EAF"
+
+# 0x4 may be file name length
+
+goto 0x10
+get file_count long
+
+set idxpos = 0x80
+for i = 0 < file_count
+    goto idxpos
+    get name string
+    math idxpos + 0x100
+    goto idxpos
+    get dummy long
+    get offset long
+    get size long
+
+    goto offset
+    endian little
+    idstring "#EMZ"
+    get crc long
+    get uncompsize long
+    get blah long
+    endian big
+
+    savepos cdatapos
+    math size - 0x10
+    clog name cdatapos size uncompsize
+
+    math idxpos + 0x20
+next i
