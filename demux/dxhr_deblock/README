@@ -1,0 +1,7 @@
+deblock.py 0.1
+unblock the packing used in Deus Ex Human Revolution (beta)
+
+deblockbe.py 0.3 
+unblock the packing used in Deus Ex Human Revolution (release)
+builds an XMA header for 360 version
+tested with python 2.6.5
