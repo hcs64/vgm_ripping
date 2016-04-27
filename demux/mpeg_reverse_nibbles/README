@@ -1,0 +1,4 @@
+mpeg_reverse_nibbles 0.1
+
+Looks like it reverses the nibbles in all but the first frame of a MPEG audio
+file. Must have been a simple obfuscation.
