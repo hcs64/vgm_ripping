@@ -1,5 +1,5 @@
 degod - decrypts ADX
-	This version of degod comes with a set of 7 keys worked out from
+	This version of degod comes with a set of 10 keys worked out from
 	the games named. They may not be completely correct, but they produce
 	good sounding audio.
 	degod has the brute force tools that I've been using to find the keys
@@ -28,7 +28,8 @@ degod - decrypts ADX
 	Senko no Ronde key. Please forward any keys you find to me so that I
 	can include them in degod.
 
-	degod is found at http://www.hcs64.com/in_cube.html
+	degod is found at https://hcs64.com/vgm_ripping.html
+    Many more keys can be found in the source code for vgmstream.
 
 Version history:
 0.0 - 10/19/07 - first version
@@ -37,3 +38,4 @@ Version history:
 0.3 - 11/28/07 - Phantasy Start Universe: Ambition of the Illuminus key
 0.4 - 12/23/07 - Senko no Ronde key, PSU:AOI key is also used in plain PSU
 0.5 - 01/16/08 - NiGHTS: Journey of Dreams key
+0.6 - 05/02/16 - type 9 support

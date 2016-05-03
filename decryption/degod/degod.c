@@ -17,27 +17,33 @@ typedef struct {
     int start;
     int mult;
     int add;
+    int type9;
     char * name;
 } key;
 
-#define KEY_COUNT 8
+#define KEY_COUNT 10
 const key keys[KEY_COUNT]={
     /* I'm pretty sure this is right, based on a decrypted version of some GOD HAND tracks */
-    {.start=0x49e1,.mult=0x4a57,.add=0x553d,.name="Clover Studio (GOD HAND, Okami)"},
+    {.start=0x49e1,.mult=0x4a57,.add=0x553d,.type9=0,.name="Clover Studio (GOD HAND, Okami)"},
     /* this is estimated */
-    {.start=0x5f5d,.mult=0x58bd,.add=0x55ed,.name="Grasshopper Manufacture 0 (Blood+)"},
+    {.start=0x5f5d,.mult=0x58bd,.add=0x55ed,.type9=0,.name="Grasshopper Manufacture 0 (Blood+)"},
     /* this is estimated */
-    {.start=0x50fb,.mult=0x5803,.add=0x5701,.name="Grasshopper Manufacture 1 (Killer7)"},
+    {.start=0x50fb,.mult=0x5803,.add=0x5701,.type9=0,.name="Grasshopper Manufacture 1 (Killer7)"},
     /* this is estimated */
-    {.start=0x4f3f,.mult=0x472f,.add=0x562f,.name="Grasshopper Manufacture 2 (Samurai Champloo)"},
+    {.start=0x4f3f,.mult=0x472f,.add=0x562f,.type9=0,.name="Grasshopper Manufacture 2 (Samurai Champloo)"},
     /* this is estimated */
-    {.start=0x66f5,.mult=0x58bd,.add=0x4459,.name="Moss Ltd (Raiden III)"},
+    {.start=0x66f5,.mult=0x58bd,.add=0x4459,.type9=0,.name="Moss Ltd (Raiden III)"},
     /* this is estimated */
-    {.start=0x5deb,.mult=0x5f27,.add=0x673f,.name="Sonic Team 0 (Phantasy Star Universe)"},
+    {.start=0x5deb,.mult=0x5f27,.add=0x673f,.type9=0,.name="Sonic Team 0 (Phantasy Star Universe)"},
     /* this is estimated */
-    {.start=0x46d3,.mult=0x5ced,.add=0x474d,.name="G.dev (Senko no Ronde)"},
+    {.start=0x46d3,.mult=0x5ced,.add=0x474d,.type9=0,.name="G.dev (Senko no Ronde)"},
     /* this seems to be dead on, but still estimated */
-    {.start=0x440b,.mult=0x6539,.add=0x5723,.name="Sonic Team 1 (NiGHTS: Journey of Dreams)"},
+    {.start=0x440b,.mult=0x6539,.add=0x5723,.type9=0,.name="Sonic Team 1 (NiGHTS: Journey of Dreams)"},
+
+    /* estimated, type 9 */
+    {.start=0x07d2,.mult=0x1ec5,.add=0x0c7f,.type9=1,.name="Phantasy Star Online 2"},
+    /* estimated, type 9 */
+    {.start=0x0003,.mult=0x0d19,.add=0x043b,.type9=1,.name="Dragon Ball Z: Dokkan Battle"},
 };
 
 void guess_xor(int * scales, int scalecount, int startset, int startguess, int addset, int addguess, int multset, int multguess, int mask);
@@ -69,6 +75,11 @@ void usage(const char * binname, int showkeys) {
             printf("\tStart:\t%04x\n",keys[i].start);
             printf("\tMult:\t%04x\n",keys[i].mult);
             printf("\tAdd:\t%04x\n",keys[i].add);
+            if (keys[i].type9) {
+                printf("\tType:\t9\n");
+            } else {
+                printf("\tType:\t8\n");
+            }
         }
     }
     printf("\n");
@@ -184,6 +195,9 @@ int main(int argc, char ** argv) {
         xorstart=keys[keyid].start;
         xormult=keys[keyid].mult;
         xoradd=keys[keyid].add;
+        if (keys[keyid].type9) {
+            mask=0x1fff;
+        }
     }
 
     /* open files */
@@ -225,7 +239,7 @@ int main(int argc, char ** argv) {
     /* get version, encryption flag */
     fread(buf,4,1,infile);
     if (!encrypt) {
-        if (buf[3]!=8) {printf("%s doesn't seem to be encrypted\n",infilename); return 1;}
+        if (buf[3]!=8 && buf[3]!=9) {printf("%s doesn't seem to be encrypted\n",infilename); return 1;}
         buf[3]=0;
     } else {
         if (buf[3]==8) {printf("%s seems to be already encrypted\n",infilename); return 1;}

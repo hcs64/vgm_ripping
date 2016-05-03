@@ -1,4 +1,6 @@
-degod 0.5 decrypts ADX files. It has support for God Hand, Okami, Killer7, Samurai Champloo, Blood+, Raiden III, Phantasy Star Universe (and the expansion), Senko no Ronde, NiGHTS: Journey of Dreams, and possibly others.
+degod 0.6 decrypts ADX files. It has support for God Hand, Okami, Killer7, Samurai Champloo, Blood+, Raiden III, Phantasy Star Universe (and the expansion), Senko no Ronde, NiGHTS: Journey of Dreams, and possibly others.
 In case you come across a game that uses a different encryption key, degod has brute force key guessing functionality built in, but I recommend using guessadx now, as it has a much better algorithm.
 
 Also, since r534 vgmstream has been able to decrypt files on the fly, using the set of keys built into degod, so you probably shouldn't bother with manually decrypting anymore.
+
+This can be useful again with the advent of "type 9" encrypted files which defeat the method used by guessadx.
