@@ -240,6 +240,9 @@ int main(int argc, char ** argv) {
     fread(buf,4,1,infile);
     if (!encrypt) {
         if (buf[3]!=8 && buf[3]!=9) {printf("%s doesn't seem to be encrypted\n",infilename); return 1;}
+        if (buf[3]==9) {
+           mask=0x1fff;
+        }
         buf[3]=0;
     } else {
         if (buf[3]==8) {printf("%s seems to be already encrypted\n",infilename); return 1;}
