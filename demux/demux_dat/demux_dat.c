@@ -4,27 +4,9 @@
 #include <inttypes.h>
 #include <string.h>
 
-//#define BIG_ENDIAN
+//#define DEMUX_DAT_BIG_ENDIAN
 
-static void writeint32LE(uint8_t *c, uint32_t val)
-{
-    c[0] = val & 0xFF;
-    val >>= 8;
-    c[1] = val & 0xFF;
-    val >>= 8;
-    c[2] = val & 0xFF;
-    val >>= 8;
-    c[3] = val & 0xFF;
-}
-
-static void writeint16LE(uint8_t *c, uint32_t val)
-{
-    c[0] = val & 0xFF;
-    val >>= 8;
-    c[1] = val & 0xFF;
-}
-
-#ifdef BIG_ENDIAN
+#ifdef DEMUX_DAT_BIG_ENDIAN
 const unsigned int TYPE_OFFSET = 2;
 const unsigned int SUBTYPE_OFFSET = 0;
 
@@ -75,17 +57,18 @@ enum EDataType
     eDataType_unk2 = 2,
     eDataType_unk3 = 3,
     eDataType_unk4 = 4,
-    eDataType_sub = 5,
-    eDataType_vid = 6,
+    eDataType_unk5 = 5,
+    eDataType_sub = 6,
+    eDataType_vid = 7,
 
     NUM_DATA_TYPES
 };
 
 // TODO: need a way to support multiple types with different subtype in one file (??? does this)
 
-const char *datatypename[NUM_DATA_TYPES] = {"audio", "unknown", "unknown 2", "unknown 3", "unknown 4", "subtitles", "video"};
-const char *datatypeext[NUM_DATA_TYPES] = {"mtaf", "dat", "dat2", "sub", "mpg"};
-int usetype[NUM_DATA_TYPES] = {1, 0, 0, 0, 0, 0, 0};
+const char *datatypename[NUM_DATA_TYPES] = {"audio", "unknown", "unknown 2", "unknown 3", "unknown 4", "unknown 5", "subtitles", "video"};
+const char *datatypeext[NUM_DATA_TYPES] = {"mtaf", "bin", "bin2", "bin3", "bin4", "bin5", "sub", "mpg"};
+int usetype[NUM_DATA_TYPES] = {1, 0, 0, 0, 0, 0, 0, 0};
 int firstblock[NUM_DATA_TYPES] = {0};
 int dump_file(FILE *infile, FILE *outfile, unsigned long size);
 FILE *open_file(const char * prefix, const char * type_name, uint16_t sub_type, int file_number);
@@ -112,8 +95,6 @@ int main(int argc, char **argv)
     /* read into and out of "files" */
     while (8 == fread(buf, 1, 8, infile))
     {
-        int got_oddness = 0;
-
         cur_off = ftell(infile) - 8;
 
         // size includes header
@@ -205,6 +186,9 @@ int main(int argc, char **argv)
                     case 6:
                         eDataType = eDataType_unk4;
                         break;
+                    case 7:
+                        eDataType = eDataType_unk5;
+                        break;
                     case 0xe:
                         eDataType = eDataType_vid;
                         break;
@@ -217,7 +201,7 @@ int main(int argc, char **argv)
                         return 1;
                 }
 
-                printf("file %d at 0x%08lx has %s (subtype %d)\n", file_number, cur_off, datatypename[eDataType], readint16(&buf[6]));
+                printf("file %d at 0x%08lx has %s (subtype %d)\n", file_number, cur_off, datatypename[eDataType], block_subtype);
 
                 firstblock[eDataType] = 1;
 
@@ -233,7 +217,7 @@ int main(int argc, char **argv)
                     {
                         outfiles[eDataType] = open_file(outfile_prefix, "vag", block_subtype, file_number);
                     }
-                    else if (eDataType == eDataType_aud && block_subtype == 1)
+                    else if (eDataType == eDataType_aud && (block_subtype == 1 || block_subtype == 2))
                     {
                         outfiles[eDataType] = open_file(outfile_prefix, "mta2", block_subtype, file_number);
                     }
@@ -263,10 +247,13 @@ int main(int argc, char **argv)
             case 0xE:
                 eDataType = eDataType_vid;
                 break;
-            case 0x5:
-                eDataType = eDataType_unk4;
+            case 0x7:
+                eDataType = eDataType_unk5;
                 break;
             case 0x6:
+                eDataType = eDataType_unk4;
+                break;
+            case 0x5:
                 eDataType = eDataType_unk3;
                 break;
             case 0x4:
@@ -280,7 +267,7 @@ int main(int argc, char **argv)
                 break;
 
             default:
-                fprintf(stderr, "unknown block type %x at %lx\n", (unsigned int)readint16(&buf[0]), cur_off);
+                fprintf(stderr, "unknown block type %x at %lx\n", (unsigned int)block_type, cur_off);
                 return 1;
         }
 
@@ -402,7 +389,7 @@ FILE *open_file(const char * prefix, const char * type_ext, uint16_t subtype, in
         return 0;
     }
 
-    snprintf(namebuf, namelen, "%s_%05u_%04x.%s\n", prefix, (unsigned int)file_number, (unsigned int)subtype, type_ext);
+    snprintf(namebuf, namelen, "%s_%05u_%04x.%s", prefix, (unsigned int)file_number, (unsigned int)subtype, type_ext);
     FILE *outfile = fopen(namebuf, "wb");
 
     free(namebuf);

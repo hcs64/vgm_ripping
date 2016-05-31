@@ -1,1 +1,3 @@
-demux_dat 0.2 extracts audio from the .DAT files in Metal Gear Solid 3. #define BIG_ENDIAN should work on Metal Gear Solid 4, but it is not tested.
+demux_dat 0.3 extracts audio from the .DAT files in Metal Gear Solid 3.
+
+demux_dat_be.exe should work on Metal Gear Solid 4.

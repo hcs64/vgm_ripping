@@ -1,0 +1,13 @@
+.PHONY : all clean
+
+all : demux_dat$(EXE_EXT) demux_dat_be$(EXE_EXT)
+
+demux_dat$(EXE_EXT) : demux_dat.c
+	$(CC) $(CFLAGS) $^ -o $@
+
+demux_dat_be$(EXE_EXT) : CFLAGS += -DDEMUX_DAT_BIG_ENDIAN
+demux_dat_be$(EXE_EXT) : demux_dat.c
+	$(CC) $(CFLAGS) $^ -o $@
+
+clean:
+	rm -f demux_dat$(EXE_EXT) demux_dat_be$(EXE_EXT)
