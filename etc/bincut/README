@@ -3,3 +3,5 @@ bincut
 Extract sections of a raw binary file.
 
 usage: bincut infile outfile range [repeat stride]
+
+Repeat of 0 will repeat as many times as possible.

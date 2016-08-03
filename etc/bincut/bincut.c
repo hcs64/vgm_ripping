@@ -98,6 +98,13 @@ int main(int argc, char **argv)
     }
 
     printf("(range=%lx to %lx)\n",start_off,end_off);
+
+    if (repeat == 0) {
+        if (stride > 0) {
+            repeat = (infile_size-start_off-(end_off-start_off))/stride+1;
+        }
+    }
+
     for (long i = 0; i < repeat; i ++)
     {
         dump(infile, outfile, start_off+i*stride, end_off-start_off);
