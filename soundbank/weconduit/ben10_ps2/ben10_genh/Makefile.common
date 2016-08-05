@@ -1,0 +1,13 @@
+OBJECTS=cnd_dmp2genh.o util.o
+EXE_NAME=cnd_dmp2genh$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): cnd_dmp2genh.o util.o
+
+cnd_dmp2genh.o: cnd_dmp2genh.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

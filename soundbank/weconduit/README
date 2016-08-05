@@ -1,0 +1,24 @@
+weconduit!
+
+I think this format is from High Voltage Software. For Wii, the extensions
+are .gcs or .gcm, for PS2 it is .pss (and I assume .psm). It makes GENH output.
+
+I started with the The Conduit version, the Ben 10 versions are similar.
+
+There is no loop support yet, and I'm not entirely comfortable that it is
+working properly.
+
+The Conduit (Wii)
+0.1
+weconduit 99_98.gcs
+cnd_dmp2genh dump01.bin dump00.bin dumpUC01.bin dumpUCmstr.bin dumpUC00.bin
+
+Ben 10: Protector of Earth (PS2)
+0.0
+weconduit.exe 99_99.pss
+cnd_dmp2genh.exe dump01.bin dump00.bin dumpUC00.bin dumpUC01.bin
+
+Ben 10: Protector of Earth (Wii)
+0.0
+weconduit.exe 99_99.gsc
+cnd_dmp2genh.exe dump01.bin dump00.bin dumpUC00.bin dumpUC01.bin
