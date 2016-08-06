@@ -1,0 +1,18 @@
+CFLAGS=-std=c99 -pedantic -Wall 
+LDFLAGS=-lm 
+OBJECTS=hpi_hpb.o util.o
+COMMON_HEADERS=error_stuff.h util.h
+EXE_NAME=hpi_hpb$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): $(OBJECTS)
+	$(CC) $(OBJECTS) -o $(EXE_NAME) $(LDFLAGS)
+	$(STRIP) $(EXE_NAME)
+
+hpi_hpb.o: hpi_hpb.c $(COMMON_HEADERS)
+
+util.o: util.c $(COMMON_HEADERS)
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)

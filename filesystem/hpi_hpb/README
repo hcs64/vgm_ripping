@@ -1,0 +1,6 @@
+hpi_hpb 0.0
+
+Extracts from MORI5.HPI and MORI5.HPB in
+Sekaiju no Meikyuu V: Nagaki Shinwa no Hate (AKA Etrian Odyssey V).
+
+usage: hpi_hpb MORI5.HPI MORI5.HPB

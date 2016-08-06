@@ -1,0 +1,51 @@
+7528 ACMP in MORI5.HPB
+
+last is at 0x91B3A (0x60462 from the start), which I can see at 0xFE48
+there's 0x28B12 at 0xFE18 which is another start
+
+0x27b48
+
+ACMP is like
+0-3: ACMP
+4-7: size
+8-b: 0x20 pretty consistently
+
+size+0x20 gives the start of the next one
+
+they're at
+0x0000
+0x024c 
+0x03ac
+0x0ef0
+0x10f4
+...
+
+at least some of them seem to contain IMA or some other frameless 4-bit ADPCM
+
+MORI5.HPI seems to have entries for these (offset, size) at
+0x8C4C
+0x2228c
+0x98DC
+0x46AC
+0x22a4c
+
+Beginning of .HPI has 0x18-0x4018, each has 16-bit start, 16-bit size,
+somewhere.
+
+String table at 0x316D8 in MORI5.HPI
+0x316D8 0x0  0x08
+0x316F0 0x1A 0x1A
+0x3170A 0x3B 0x21
+0x3172B 0x53 0x1D
+0x31748
+
+0x4018 seems to start a structure starting with offset into string table.
+Yep,
+0-3: string table offset for file name
+4-7: offset in HPB
+8-b: size
+c-f: type??
+
+0x10 (0x2d6c) would be the maximum value in that weird 0x18-0x4018 table. 
+0x12 might be 16-bit 0x1000, which x4 would give the size of that table. Just
+going to assume it.
