@@ -1,8 +1,15 @@
 puts 'voxhound 0.3 by hcs'
 
 def valid_frame?(frame, idx)
+  # TODO: generally we have expectations and it would
+  # be nice to check them:
+  # 4 at the beginning of mono from MFAudio
+  # 6 at the beginning of stereo from MFAudio
+  # 7 at the end of a stream from MFAudio (after usable data)
+  # 2 in the original VOX
+  # 0 otherwise
   flags = frame[idx+1].ord
-  (frame[idx+0].ord < 0x50 and (flags == 4 or flags == 2 or flags == 0))
+  (frame[idx+0].ord < 0x50 && (flags == 6 || flags == 4 || flags == 2 || flags == 0))
 end
 
 if ARGV[0] == '-r'
