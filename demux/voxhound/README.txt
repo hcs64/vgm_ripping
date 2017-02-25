@@ -1,4 +1,4 @@
-voxhound 0.2
+voxhound 0.3
 
 For replacing audio in Metal Gear Solid PC VOX files.
 
@@ -16,15 +16,14 @@ The batch files will delete the intermediate .VAG files.
 This will directly modify the original .VOX files, so be sure to keep a clean
 copy in case something goes wrong.
 
----
-
-I haven't tested this at all with the game yet, just with a few sample files.
-
 -hcs
 
 --------------------------------------------------------------------------------
 
 History:
+0.3 - 2017-02-25 - support F0 type, seen at the end of .DMO files
+                 - general code prettifying
+
 0.2 - 2017-02-24 - add proper parenthesis in frame validation logic
 
 0.1 - 2017-02-24 - allow 04 flags (when MFAudio is set to "Use Extended
