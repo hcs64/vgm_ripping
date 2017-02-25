@@ -1,0 +1,23 @@
+voxhound 0.0
+
+For replacing audio in Metal Gear Solid PC VOX files.
+
+---
+
+Run extract.bat on the .VOX file(s). This will extract the audio into a .VAG
+file and decode it to PCM .WAV with MFAudio.
+
+After you've modified the .WAVs (without moving them, run replace.bat on the
+original .VOX files. This will encode the audio back to .VAG and replace it in
+the .VOX. This can be repeated without redoing the initial extraction.
+
+The batch files will delete the intermediate .VAG files.
+
+This will directly modify the original .VOX files, so be sure to keep a clean
+copy in case something goes wrong.
+
+---
+
+I haven't tested this at all with the game. just with a few sample files.
+
+-hcs
