@@ -1,4 +1,4 @@
-voxhound 0.0
+voxhound 0.1
 
 For replacing audio in Metal Gear Solid PC VOX files.
 
@@ -21,3 +21,11 @@ copy in case something goes wrong.
 I haven't tested this at all with the game. just with a few sample files.
 
 -hcs
+
+--------------------------------------------------------------------------------
+
+History:
+0.1 - 2017-02-24 - allow 04 flags (when MFAudio is set to "Use Extended
+Flagging", the default, it sets this on the first frame)
+
+0.0 - 2017-02-24

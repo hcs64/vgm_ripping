@@ -1,9 +1,9 @@
 def valid_frame?(frame, idx)
   flags = frame[idx+1].ord
-  (frame[idx+0].ord < 0x50 and flags == 2 or flags == 0)
+  (frame[idx+0].ord < 0x50 and flags == 4 or flags == 2 or flags == 0)
 end
 
-puts 'voxhound 0.0 by hcs'
+puts 'voxhound 0.1 by hcs'
 
 if ARGV[0] == '-r'
   mode = 'read'
@@ -84,4 +84,4 @@ end
 vag.close
 vox.close
 
-puts 'ok!'
+puts "ok!\n"
