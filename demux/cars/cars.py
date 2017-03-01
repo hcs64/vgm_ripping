@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+# for THQ's "Cars" (PC version)
 # see http://forum.xentax.com/viewtopic.php?f=15&t=2135
 
 from io import open
