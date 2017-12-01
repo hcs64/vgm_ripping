@@ -1,0 +1,30 @@
+﻿Decode images from DDWLG00 format to PNG, found in "Pigeon Blood of PIL/SLASHXXX"
+
+Run as
+ddwlg00.exe IMAGE WIDTH
+
+Where IMAGE is the file to decode and WIDTH is the width expected.
+For 博嗣a_l the width is 922, for 博嗣b_m it is 532, I don't know about other files.
+You will have to rename the files to only use ASCII as something doesn't properly handle international file names.
+
+Sorry about the speed and file size.
+
+---
+
+Built via
+C:\Users\Adam\Downloads>ocra --no-enc --console --gem-minimal --verbose ddwlg00.rb
+
+Name: rubyinstaller-2.4.2-2-x86.7z
+Size: 8767916 bytes (8 MB)
+SHA256: 68655D8542B5EBB077AA6FCAC46189D7B7D182961468C4D8B4F2E4DE862F7E2C
+
+Name: chunky_png-1.3.8.gem
+Size: 351232 bytes (0 MB)
+SHA256: 83A0B634FA7587DC68AD7DB0D0D4994917F3658D7927A7FED043026DFEB30D48
+
+Name: ocra-1.3.10.gem
+Size: 119808 bytes (0 MB)
+SHA256: B0472941D64A114A082193017D2126369B4D8A557D174C9F4A49EAAC9D9D0039
+
+----
+2017-11-16 version 0.0
