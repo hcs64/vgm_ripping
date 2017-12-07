@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <inttypes.h>
@@ -26,44 +27,72 @@ uint32_t writeuint32le(uint8_t arr[4], uint32_t v) {
 int main(int argc, char** argv) {
   if (argc != 3) {
     printf("MLX XOR3 decryptor for Valkyria Chronicles 2\n");
-    printf("v0.0 2017-12-01\n");
+    printf("v0.1 2017-12-06\n");
     printf("usage: xor3 IN.MLX OUT.MLX\n");
     return -1;
   }
   FILE* infile = fopen(argv[1], "rb");
-  FILE* outfile = fopen(argv[2], "wb");
+  FILE* outfile = fopen(argv[2], "w+b");
 
-  uint8_t bytes[16];
-  fread(bytes, 1, 4, infile);
-  uint32_t key = readuint32le(bytes);
+  fseek(infile, 0, SEEK_END);
+  long bytes_left = ftell(infile) - 0x10;
 
   fseek(infile, 0, SEEK_SET);
 
-  bool first_frame = true;
-  while (!feof(infile) && fread(bytes, 1, 16, infile) == 16) {
-    uint32_t next_frame_key;
-    
-    for (int i = 0; i < 4; i++) {
-      writeuint32le(bytes + i * 4, readuint32le(bytes + i * 4) ^ key);
+  uint8_t bytes[128];
+  fread(bytes, 1, 16, infile);
+  uint32_t key = readuint32le(bytes);
+  uint32_t next_line_key;
+  key = key * 3 + 1;
+  next_line_key = key;
+  uint32_t byte_key = key;
+
+  for (int i = 4; i < 16; i+= 4) {
+    if ((readuint32le(bytes + i) ^ key) != 0) {
+      printf("%s: error decrypting header @ %d\n", argv[1], i);
+      exit(-1);
+    }
+    key = key * 3 + 1;
+  }
+
+  int bytes_per_frame = 128;
+  while (bytes_left && !feof(infile) &&
+      fread(bytes, 1, bytes_per_frame, infile) == bytes_per_frame) {
+
+    if (bytes_per_frame == 1) {
+      bytes[0] ^= key;
       key = key * 3 + 1;
-      if (i == 0) {
-        next_frame_key = key;
-      }
-    }
-
-    key = next_frame_key;
-
-    if (first_frame) {
-      uint8_t zeroes[16] = {0};
-      if (memcmp(bytes, zeroes, 16)) {
-        printf("%s error: header not decrypted properly\n", argv[1]);
-      }
     } else {
-      fwrite(bytes, 1, 16, outfile);
+      for (int j = 0; j < 8; j++) {
+        key = next_line_key;
+        for (int i = 0; i < 4; i++) {
+          writeuint32le(bytes + j * 16 + i * 4,
+              readuint32le(bytes + j * 16 + i * 4) ^ key);
+          key = key * 3 + 1;
+          if (i == 0) {
+            next_line_key = key;
+          }
+        }
+      }
     }
-    first_frame = false;
+
+    fwrite(bytes, 1, bytes_per_frame, outfile);
+    bytes_left -= bytes_per_frame;
+
+    if (bytes_per_frame > 1 && bytes_left < 0x80) {
+      bytes_per_frame = 1;
+      key = byte_key;
+    }
   }
 
   fclose(infile);
+
+  fseek(outfile, -0x10, SEEK_CUR);
+  fread(bytes, 1, 0x10, outfile);
+
+  uint8_t EOFC[4] = "EOFC";
+  if (memcmp(bytes, EOFC, 4)) {
+    printf("%s: didn't find final EOFC\n", argv[1]);
+  }
   fclose(outfile);
 }
