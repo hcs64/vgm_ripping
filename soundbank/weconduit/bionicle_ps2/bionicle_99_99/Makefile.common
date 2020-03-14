@@ -1,0 +1,13 @@
+OBJECTS=weconduit.o util.o
+EXE_NAME=weconduit$(EXE_EXT)
+
+all: $(EXE_NAME)
+
+$(EXE_NAME): weconduit.o util.o
+
+weconduit.o: weconduit.c error_stuff.h util.h
+
+util.o: util.c error_stuff.h util.h
+
+clean:
+	rm -f $(EXE_NAME) $(OBJECTS)
