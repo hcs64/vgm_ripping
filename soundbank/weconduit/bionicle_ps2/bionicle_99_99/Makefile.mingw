@@ -1,0 +1,10 @@
+CFLAGS=-std=c99 -pedantic -Wall
+STRIP=i686-w64-mingw32-strip
+CC=i686-w64-mingw32-gcc
+EXE_EXT=.exe
+
+%.exe:
+	$(CC) $(CFLAGS) $^ -o $@
+	$(STRIP) $@
+
+include Makefile.common
