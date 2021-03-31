@@ -1,1 +1,3 @@
 h4m_audio_decode 0.3 decodes the IMA ADPCM audio from .h4m files found in some Gamecube games.
+
+NOTE: This is unnecessary now that vgmstream has .h4m support.
