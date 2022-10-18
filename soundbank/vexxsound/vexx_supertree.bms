@@ -1,0 +1,37 @@
+# originally script by aluigi after suggestions by Zazz
+# https://forum.xentax.com/viewtopic.php?p=38703#p38703
+# modified to use sortarray by hcs
+
+endian big
+get FILES long
+for i = 0 < FILES
+   get OFFSET long
+   get SIZE long
+   get DUMMY long
+   get DUMMY long
+   putarray 0 i OFFSET
+   putarray 1 i SIZE
+next i
+
+sortarray 0 1
+
+findloc TEMPFILES string "C:\\VexxData" 0
+for i = 0 < FILES
+   getarray OFFSET 0 i
+   if OFFSET == TEMPFILES
+      getarray SIZE 1 i
+      break
+   endif
+next i
+if i >= FILES
+   getarray OFFSET 0 1
+   getarray SIZE 1 1
+endif
+log MEMORY_FILE OFFSET SIZE
+
+for i = 0 < FILES
+   get NAME line MEMORY_FILE
+   getarray OFFSET 0 i
+   getarray SIZE   1 i
+   log NAME OFFSET SIZE
+next i

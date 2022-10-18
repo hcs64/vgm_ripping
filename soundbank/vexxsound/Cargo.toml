@@ -1,0 +1,11 @@
+[package]
+name = "vexxsound"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+crc = "2.0"
+nom = "7"
+scroll = "0.10"

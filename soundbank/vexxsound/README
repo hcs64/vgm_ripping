@@ -1,0 +1,26 @@
+vexxsound - Dump music files from Vexx (GC) sound0.tre
+
+First the top level supertree0.tre needs to be extracted with the BMS script by
+aluigi <https://forum.xentax.com/viewtopic.php?t=4513#p38695>.  I've modified
+this (vexx_supertree.bms) to use the newer QuickBMS SortArray function.
+
+Filenames are not actually present in the .tre directory index, instead there is
+a file name hash. The top level names are found in a file called tempfiles.txt
+within supertree0.tre (sorted by offset within the supertree file, though the
+index is sorted by name hash), but there is no equivalent (AFAIK) for
+VexxDataGC_TreFiles\Data\Sound\sound0.tre.
+
+In any case the files within sound0.tre are just named with numbers like
+data\sound\0000001.dsp. sound3.ad3 gives higher level names to these.
+
+vexxsound (as committed here) uses sound.ad3 to find the numbers and names of
+the streams in the Music group, looks them up by hash, uses the names
+for the dumped .dsp files.
+Run like this, with sound0.tre and sound.ad3 in the same directory:
+
+vexxsound sound0.tre
+
+This won't produce a finished rip, as there are no loops and some tracks are
+split into chunks.  There are also .mdf metadata files for each .dsp, and the
+other sound.* files might have information that can be used to make TXTP
+playlists.
